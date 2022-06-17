@@ -10,6 +10,10 @@ public class Contacts {
     private long phone;
     private String email;
 
+    public String getFirstName() {
+        return firstName;
+    }
+
     public Contacts(String first_name, String last_name, String address, String city, String state, int zip, long phone, String email_id) {
         this.firstName = first_name;
         this.lastName = last_name;
@@ -25,6 +29,6 @@ public class Contacts {
     public String toString()
     {
         return "First name is: "+firstName+"\nLast Name is: "+lastName+"\nAddress is: "+address+"\nCity name is: "+city+
-                "\nState is: "+state+"\nZip is: "+zip+"\nPhone Number is: "+phone+"\nEmail Id is: "+email;
+                "\nState is: "+state+"\nZip is: "+zip+"\nPhone Number is: "+phone+"\nEmail Id is: "+email+"\n";
     }
 }
