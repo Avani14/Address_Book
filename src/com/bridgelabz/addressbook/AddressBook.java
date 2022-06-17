@@ -11,5 +11,6 @@ public class AddressBook {
         AddressBookService.addContact();
         AddressBookService.display();
         AddressBookService.editContact();
+        AddressBookService.deleteContact();
     }
 }
