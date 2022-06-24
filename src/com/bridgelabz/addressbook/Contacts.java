@@ -4,6 +4,11 @@ public class Contacts {
     private String firstName;
     private String lastName;
     private String address;
+
+    public String getLastName() {
+        return lastName;
+    }
+
     private String city;
     private String state;
     private int zip;
