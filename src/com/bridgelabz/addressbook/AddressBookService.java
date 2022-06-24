@@ -152,26 +152,30 @@ public class AddressBookService {
         }
         return true;
     }
-    // Searching using State
     public static void findSameStateContacts(String state)
     {
+        int count = 0;
         for(String s : dictionaryForState.keySet())
         {
             if(dictionaryForState.get(s).equals(state))
             {
+                count++;
                 System.out.println(s);
             }
         }
+        System.out.println("Total number of people with state "+state+" are:"+count);
     }
-    //Searching using city
     public static void findSameCityContacts(String city)
     {
+        int count = 0;
         for(String s : dictionaryForCity.keySet())
         {
             if(dictionaryForCity.get(s).equals(city))
             {
+                count++;
                 System.out.println(s);
             }
         }
+        System.out.println("Total number of people with city "+city+" are:"+count);
     }
 }
