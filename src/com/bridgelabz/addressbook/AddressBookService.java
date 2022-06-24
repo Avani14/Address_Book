@@ -1,12 +1,15 @@
 package com.bridgelabz.addressbook;
 
 import java.util.*;
+import java.util.Dictionary;
 
 public class AddressBookService {
     public static Scanner sc = new Scanner(System.in);
     public static ArrayList<Contacts> arrayOfContacts;
     public static HashMap<String, ArrayList<Contacts>> hashMapOfAddressBooks = new HashMap<>();
 
+    public static HashMap<String,String> dictionaryForState = new HashMap<String,String>();
+    public static HashMap<String,String> dictionaryForCity = new HashMap<String,String>();
     public static ArrayList<Contacts> findAddressBook(String name) {
         for (Map.Entry<String, ArrayList<Contacts>> iterator : hashMapOfAddressBooks.entrySet()) {
             if (iterator.getKey().equals(name)) {
@@ -59,6 +62,8 @@ public class AddressBookService {
             System.out.println("Please enter your email id :");
             String email_id = sc.next();
             Contacts c = new Contacts(first_name, last_name, address, city, state, zip, phone, email_id);
+            dictionaryForState.put(first_name+" "+last_name,state);
+            dictionaryForCity.put(first_name+" "+last_name,city);
             if (findAddressBook(bookName) != null) {
                 hashMapOfAddressBooks.get(bookName).add(c);
                 return;
@@ -146,5 +151,26 @@ public class AddressBookService {
             }
         }
         return true;
+    }
+    public static void findSameStateContacts(String state)
+    {
+        for(String s : dictionaryForState.keySet())
+        {
+            if(dictionaryForState.get(s).equals(state))
+            {
+                System.out.println(s);
+            }
+        }
+    }
+
+    public static void findSameCityContacts(String city)
+    {
+        for(String s : dictionaryForCity.keySet())
+        {
+            if(dictionaryForCity.get(s).equals(city))
+            {
+                System.out.println(s);
+            }
+        }
     }
 }

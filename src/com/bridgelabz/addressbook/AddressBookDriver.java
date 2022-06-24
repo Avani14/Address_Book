@@ -11,7 +11,9 @@ public class AddressBookDriver {
         String option;
         while(true) {
             System.out.println(" ---- MENU ----");
-            System.out.println(" 1. Add Address Book\n 2. Add contacts\n 3. Display contacts\n 4. Edit contact\n 5. Delete Contact\n 6. Exit");
+            System.out.println(" 1. Add Address Book\n 2. Add contacts\n 3. Display contacts" +
+                    "\n 4. Edit contact\n 5. Delete Contact\n 6. Find Contacts with same state" +
+                    "\n 7. Find Contacts with same city\n8. Exit");
             option = sc.next();
 
             switch (option) {
@@ -35,6 +37,16 @@ public class AddressBookDriver {
                     AddressBookService.deleteContact();
                     break;
                 case "6":
+                    System.out.println("Enter the state: ");
+                    String state = sc.next();
+                    AddressBookService.findSameStateContacts(state);
+                    break;
+                case "7":
+                    System.out.println("Enter the city: ");
+                    String city = sc.next();
+                    AddressBookService.findSameCityContacts(city);
+                    break;
+                case "8":
                     System.out.println("Thank You!");
                     return;
                 default:
