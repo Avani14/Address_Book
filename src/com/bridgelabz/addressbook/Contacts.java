@@ -5,6 +5,14 @@ public class Contacts {
     private String lastName;
     private String address;
 
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
     public String getLastName() {
         return lastName;
     }
