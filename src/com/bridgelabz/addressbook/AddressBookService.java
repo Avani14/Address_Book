@@ -85,18 +85,6 @@ public class AddressBookService {  public static Scanner sc = new Scanner(System
             System.out.println("The contact with name: "+first_name+" already exists.\n"+hashMapOfAddressBooks.get(bookName));
         }
     }
-
-    public static void display() {
-        System.out.println(" Please enter the name of the address book: ");
-        String name = sc.next();
-        if(hashMapOfAddressBooks.get(name).isEmpty())
-        {
-            System.out.println("The Address Book is empty.");
-            return;
-        }
-        System.out.println(hashMapOfAddressBooks.get(name));
-    }
-
     public static void displayByOrder() {
         System.out.println(" Please enter the name of the address book: ");
         String name = sc.next();
@@ -105,7 +93,9 @@ public class AddressBookService {  public static Scanner sc = new Scanner(System
             System.out.println("The Address Book is empty.");
             return;
         }
-        hashMapOfAddressBooks.get(name).stream().map(n->n.getFirstName()).sorted().forEach(n-> System.out.println(n));
+        hashMapOfAddressBooks.get(name).stream().sorted((contact1, contact2) -> contact1.getFirstName().compareToIgnoreCase(contact2.getFirstName()))
+                .forEach(contact -> System.out.println(contact));
+
     }
     public static void editContact() {
         System.out.println("Enter the Address book you want to edit.");
@@ -193,5 +183,32 @@ public class AddressBookService {  public static Scanner sc = new Scanner(System
                 .map(n->n.getValue().equals(city))
                 .count();
         System.out.println("Total number of people with state "+city+" are:"+countState);
+    }
+    public static void sortByCity()
+    {
+        System.out.println("Sorted by city names:");
+        hashMapOfAddressBooks.values().forEach((n)->{
+            n.stream().sorted((contact1,contact2) -> {
+              return contact1.getCity().compareToIgnoreCase(contact2.getCity());
+            }).forEach(n1-> System.out.println(n1));
+        });
+    }
+    public static void sortByState()
+    {
+        System.out.println("Sorted by state names:");
+        hashMapOfAddressBooks.values().forEach((n)->{
+            n.stream().sorted((contact1,contact2) -> {
+                return contact1.getState().compareToIgnoreCase(contact2.getState());
+            }).forEach(n1-> System.out.println(n1));
+        });
+    }
+    public static void sortByZip()
+    {
+        System.out.println("Sorted by city names:");
+        hashMapOfAddressBooks.values().forEach((n)->{
+            n.stream().sorted((contact1,contact2) -> {
+                return contact1.getZip()==(contact2.getZip())?0:1;
+            }).forEach(n1-> System.out.println(n1));
+        });
     }
 }
