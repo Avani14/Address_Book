@@ -1,10 +1,19 @@
 package com.bridgelabz.addressbook;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.Dictionary;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
-public class AddressBookService {
-    public static Scanner sc = new Scanner(System.in);
+@FunctionalInterface
+interface ICheckDuplicate{
+    boolean checkDuplicate(String f_name,String l_name);
+}
+
+public class AddressBookService {  public static Scanner sc = new Scanner(System.in);
     public static ArrayList<Contacts> arrayOfContacts;
     public static HashMap<String, ArrayList<Contacts>> hashMapOfAddressBooks = new HashMap<>();
 
@@ -87,6 +96,17 @@ public class AddressBookService {
         }
         System.out.println(hashMapOfAddressBooks.get(name));
     }
+
+    public static void displayByOrder() {
+        System.out.println(" Please enter the name of the address book: ");
+        String name = sc.next();
+        if(hashMapOfAddressBooks.get(name).isEmpty())
+        {
+            System.out.println("The Address Book is empty.");
+            return;
+        }
+        hashMapOfAddressBooks.get(name).stream().map(n->n.getFirstName()).sorted().forEach(n-> System.out.println(n));
+    }
     public static void editContact() {
         System.out.println("Enter the Address book you want to edit.");
         String addressBookEdit = sc.next();
@@ -135,47 +155,43 @@ public class AddressBookService {
         arrayList.remove(index);
     }
     //Overriding the equals() method.
-    public static boolean checkDuplicate(String book,String name,String last_name)
-    {
-        if(hashMapOfAddressBooks.get(book) == null)
-        {
+    public static boolean checkDuplicate(String book,String name,String last_name) {
+        if(hashMapOfAddressBooks.get(book) == null) {
             return true;
         }
         ArrayList<Contacts> arrayList = hashMapOfAddressBooks.get(book);
-
-        for(Contacts c : arrayList)
-        {
-            if(name.equals(c.getFirstName()) && last_name.equals(c.getLastName()))
-            {
+        HashMap<String,String> names = new HashMap<String,String>();
+        for (Contacts c: arrayList) {
+            names.put(c.getFirstName(),c.getLastName());
+        }
+        ICheckDuplicate checkDuplicate = ((f_name, l_name) -> {
+            if(f_name.equals(name) && l_name.equals(last_name)){
                 return false;
             }
-        }
-        return true;
+            return true;
+        });
+        Boolean ansToDuplicates = names.entrySet().stream()
+                .anyMatch(n->checkDuplicate.checkDuplicate(n.getKey(),n.getValue()));
+        return ansToDuplicates;
     }
     public static void findSameStateContacts(String state)
     {
-        int count = 0;
-        for(String s : dictionaryForState.keySet())
-        {
-            if(dictionaryForState.get(s).equals(state))
-            {
-                count++;
-                System.out.println(s);
-            }
-        }
-        System.out.println("Total number of people with state "+state+" are:"+count);
+        dictionaryForState.entrySet().stream()
+                .filter(n->n.getValue().equals(state))
+                .forEach(n-> System.out.println(n));
+        long countState = dictionaryForCity.entrySet().stream()
+                .map(n->n.getValue().equals(state))
+                .count();
+        System.out.println("Total number of people with state "+state+" are:"+countState);
     }
     public static void findSameCityContacts(String city)
     {
-        int count = 0;
-        for(String s : dictionaryForCity.keySet())
-        {
-            if(dictionaryForCity.get(s).equals(city))
-            {
-                count++;
-                System.out.println(s);
-            }
-        }
-        System.out.println("Total number of people with city "+city+" are:"+count);
+        dictionaryForCity.entrySet().stream()
+                .filter(n->n.getValue().equals(city))
+                .forEach(n-> System.out.println(n));
+        long countState = dictionaryForCity.entrySet().stream()
+                .map(n->n.getValue().equals(city))
+                .count();
+        System.out.println("Total number of people with state "+city+" are:"+countState);
     }
 }
