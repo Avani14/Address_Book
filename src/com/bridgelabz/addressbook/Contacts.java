@@ -5,6 +5,10 @@ public class Contacts {
     private String lastName;
     private String address;
 
+    public int getZip() {
+        return zip;
+    }
+
     public String getCity() {
         return city;
     }
