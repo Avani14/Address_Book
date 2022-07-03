@@ -1,5 +1,7 @@
 package com.bridgelabz.addressbook;
 
+import javax.imageio.IIOException;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.Dictionary;
@@ -75,6 +77,15 @@ public class AddressBookService {  public static Scanner sc = new Scanner(System
             dictionaryForCity.put(first_name+" "+last_name,city);
             if (findAddressBook(bookName) != null) {
                 hashMapOfAddressBooks.get(bookName).add(c);
+                try {
+                    AddressBookIO.writeIntoFile();
+                    System.out.println("Following Data is inserted : ");
+                    AddressBookIO.readFromFile();
+                }
+                catch (IOException e)
+                {
+                    System.out.println(e.getMessage());
+                }
                 return;
             }
             arrayOfContacts = new ArrayList<Contacts>();
@@ -83,6 +94,13 @@ public class AddressBookService {  public static Scanner sc = new Scanner(System
         }
         else{
             System.out.println("The contact with name: "+first_name+" already exists.\n"+hashMapOfAddressBooks.get(bookName));
+        }
+        try {
+            AddressBookIO.writeIntoFile();
+        }
+        catch (IOException e)
+        {
+            System.out.println(e.getMessage());
         }
     }
     public static void displayByOrder() {
