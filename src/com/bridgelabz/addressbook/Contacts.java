@@ -5,6 +5,14 @@ public class Contacts {
     private String lastName;
     private String address;
 
+    public long getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public int getZip() {
         return zip;
     }

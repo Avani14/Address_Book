@@ -79,8 +79,6 @@ public class AddressBookService {  public static Scanner sc = new Scanner(System
                 hashMapOfAddressBooks.get(bookName).add(c);
                 try {
                     AddressBookIO.writeIntoFile();
-                    System.out.println("Following Data is inserted : ");
-                    AddressBookIO.readFromFile();
                 }
                 catch (IOException e)
                 {
@@ -113,8 +111,14 @@ public class AddressBookService {  public static Scanner sc = new Scanner(System
         }
         hashMapOfAddressBooks.get(name).stream().sorted((contact1, contact2) -> contact1.getFirstName().compareToIgnoreCase(contact2.getFirstName()))
                 .forEach(contact -> System.out.println(contact));
-
-    }
+        try {
+            System.out.println("Data inserted in file is:");
+            AddressBookIO.readFromFile();
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+            }
     public static void editContact() {
         System.out.println("Enter the Address book you want to edit.");
         String addressBookEdit = sc.next();
