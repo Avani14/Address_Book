@@ -50,6 +50,10 @@ public class Contacts {
         this.email = email_id;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
     @Override
     public String toString()
     {

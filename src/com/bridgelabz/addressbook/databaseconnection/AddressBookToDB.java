@@ -1,10 +1,10 @@
 package com.bridgelabz.addressbook.databaseconnection;
 
+import com.bridgelabz.addressbook.AddressBookService;
+import com.bridgelabz.addressbook.Contacts;
+
 import javax.xml.transform.Result;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class AddressBookToDB implements IAddressBookToDB {
     Connection connection = (new DBConnection()).getConnection() ;
@@ -105,6 +105,26 @@ public class AddressBookToDB implements IAddressBookToDB {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public void insertData(String book_name, Contacts c) {
+        String insertQuery = "insert into address_book(first_name ,last_name ,address,city,state,zip,phone_number,email,name) values(?,?,?,?,?,?,?,?,'"+book_name+"')";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+            preparedStatement.setString(1,c.getFirstName());
+            preparedStatement.setString(2,c.getLastName());
+            preparedStatement.setString(3,c.getAddress());
+            preparedStatement.setString(4,c.getCity());
+            preparedStatement.setString(5,c.getState());
+            preparedStatement.setInt(6,c.getZip());
+            preparedStatement.setLong(7,c.getPhone());
+            preparedStatement.setString(8,c.getEmail());
+            preparedStatement.executeUpdate();
+            System.out.println("Inserted Successfully in Database");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
