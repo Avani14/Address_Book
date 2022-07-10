@@ -33,6 +33,12 @@ public class AddressBookDriver {
                 case "3":
 //                    AddressBookService.displayByOrder();
                     addressBookToDB.getData();
+                    sc.nextLine();
+                    System.out.println("Enter the start time");
+                    String start_time = sc.nextLine();
+                    System.out.println("Enter the end time");
+                    String end_time = sc.nextLine();
+                    addressBookToDB.getDataByTimeStamp(start_time,end_time);
                     break;
                 case "4":
                     AddressBookService.editContact();
