@@ -81,6 +81,7 @@ public class AddressBookService {  public static Scanner sc = new Scanner(System
             if (findAddressBook(bookName) != null) {
                 hashMapOfAddressBooks.get(bookName).add(c);
                 try {
+                    //The ability to insert in both file and database
                     AddressBookIO.writeIntoFile();
                     addressBookToDB.insertData(bookName,c);
                 }
