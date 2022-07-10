@@ -1,5 +1,7 @@
 package com.bridgelabz.addressbook;
 
+import com.bridgelabz.addressbook.databaseconnection.AddressBookToDB;
+
 import javax.imageio.IIOException;
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -58,6 +60,7 @@ public class AddressBookService {  public static Scanner sc = new Scanner(System
         String first_name = sc.next();
         System.out.println("Please enter your last name :");
         String last_name = sc.next();
+        AddressBookToDB addressBookToDB = new AddressBookToDB();
         if(AddressBookService.checkDuplicate(bookName,first_name,last_name)) {
             sc.nextLine();
             System.out.println("Please enter your address :");
@@ -79,6 +82,7 @@ public class AddressBookService {  public static Scanner sc = new Scanner(System
                 hashMapOfAddressBooks.get(bookName).add(c);
                 try {
                     AddressBookIO.writeIntoFile();
+                    addressBookToDB.insertData(bookName,c);
                 }
                 catch (IOException e)
                 {
@@ -89,9 +93,11 @@ public class AddressBookService {  public static Scanner sc = new Scanner(System
             arrayOfContacts = new ArrayList<Contacts>();
             arrayOfContacts.add(c);
             hashMapOfAddressBooks.put(bookName, arrayOfContacts);
+            addressBookToDB.insertData(bookName,c);
         }
         else{
             System.out.println("The contact with name: "+first_name+" already exists.\n"+hashMapOfAddressBooks.get(bookName));
+            return;
         }
         try {
             AddressBookIO.writeIntoFile();
@@ -100,6 +106,8 @@ public class AddressBookService {  public static Scanner sc = new Scanner(System
         {
             System.out.println(e.getMessage());
         }
+
+
     }
     public static void displayByOrder() {
         System.out.println(" Please enter the name of the address book: ");
