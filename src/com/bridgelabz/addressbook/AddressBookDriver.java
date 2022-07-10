@@ -1,5 +1,7 @@
 package com.bridgelabz.addressbook;
 
+import com.bridgelabz.addressbook.databaseconnection.AddressBookToDB;
+
 import java.util.Scanner;
 
 public class AddressBookDriver {
@@ -9,6 +11,7 @@ public class AddressBookDriver {
         Scanner sc = new Scanner(System.in);
         System.out.println();
         String option;
+        AddressBookToDB addressBookToDB = new AddressBookToDB();
         while(true) {
             System.out.println(" ---- MENU ----");
             System.out.println(" 1. Add Address Book\n 2. Add contacts\n 3. Display contacts" +
@@ -28,7 +31,8 @@ public class AddressBookDriver {
                     AddressBookService.addContact(addressBook);
                     break;
                 case "3":
-                    AddressBookService.displayByOrder();
+//                    AddressBookService.displayByOrder();
+                    addressBookToDB.getData();
                     break;
                 case "4":
                     AddressBookService.editContact();
