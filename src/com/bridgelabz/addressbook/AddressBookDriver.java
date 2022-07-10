@@ -1,6 +1,7 @@
 package com.bridgelabz.addressbook;
 
 import com.bridgelabz.addressbook.databaseconnection.AddressBookToDB;
+import com.bridgelabz.addressbook.databaseconnection.IAddressBookToDB;
 
 import java.util.Scanner;
 
@@ -11,12 +12,12 @@ public class AddressBookDriver {
         Scanner sc = new Scanner(System.in);
         System.out.println();
         String option;
-        AddressBookToDB addressBookToDB = new AddressBookToDB();
+        IAddressBookToDB addressBookToDB = new AddressBookToDB();
         while(true) {
             System.out.println(" ---- MENU ----");
             System.out.println(" 1. Add Address Book\n 2. Add contacts\n 3. Display contacts" +
                     "\n 4. Edit contact\n 5. Delete Contact\n 6. Find Contacts with same state" +
-                    "\n 7. Find Contacts with same city \n 8.Sort the contacts by City State Or Zip.\n 10. Exit");
+                    "\n 7. Find Contacts with same city \n 8. Sort the contacts by City State Or Zip. \n 9. Find contacts by city or state \n 10. Exit");
             option = sc.next();
 
             switch (option) {
@@ -111,6 +112,25 @@ public class AddressBookDriver {
                     }
                     break;
                 case "9":
+                    System.out.println(" Enter 1 to get contacts by state\n Enter 2 to get contacts by city");
+                    opt = sc.nextInt();
+                    switch (opt){
+                        case 1:
+                            System.out.println("Enter the state name");
+                            state = sc.next();
+                            addressBookToDB.getCountByCity("state",state);
+                            break;
+                        case 2:
+                            System.out.println("Enter the city name");
+                            city = sc.next();
+                            addressBookToDB.getCountByCity("city",city);
+                            break;
+                        default:
+                            System.out.println("Please enter valid option");
+                            break;
+                    }
+                    break;
+                case "10":
                     System.out.println("Thank You!");
                     return;
                 default:
